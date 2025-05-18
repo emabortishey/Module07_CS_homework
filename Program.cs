@@ -46,5 +46,62 @@ public interface IPart
 public interface IWorker
 {
     string _name { get; }
-    int _strength { get; }
-}   
+}
+
+public class Basement : IPart
+{
+    public string _name { set; get; }
+    public int _time { set; get; }
+}
+public class Window : IPart
+{
+    public string _name { set; get; }
+    public int _time { set; get; }
+}
+public class Wall : IPart
+{
+    public string _name { set; get; }
+    public int _time { set; get; }
+}
+public class Roof : IPart
+{
+    public string _name { set; get; }
+    public int _time { set; get; }
+}
+public class Door : IPart
+{
+    public string _name { set; get; }
+    public int _time { set; get; }
+}
+
+public class Builder : IWorker
+{
+    public string _name { set; get; }
+    public int _strength { set; get; }
+}
+public class Team_Leader : IWorker
+{
+    public string _name { set; get; }
+    public int _strength { set; get; }
+}
+
+public class Team
+{
+    public Builder[] builders =
+    {
+        new Builder { _name = "Builder 1", _strength = 1 },
+        new Builder { _name = "Builder 2", _strength = 2 },
+        new Builder { _name = "Builder 3", _strength = 3 },
+        new Builder { _name = "Builder 4", _strength = 4 }
+    };
+    public Team_Leader leader { set; get; }
+}
+
+public class House
+{
+    public Basement _base { set; get; }
+    public Wall[] _walls { set; get; }
+    public Window[] _windows { set; get; }
+    public Door _door { set; get; }
+    public Roof _roof { set; get; }
+}
