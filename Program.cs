@@ -124,6 +124,21 @@ public class Team
 
         return false;
     }
+
+    public void Report()
+    {
+        for (int i = 0; i < _house.parts.Length; i++)
+        {
+            if (_house.parts[i]._isdone == true)
+            {
+                WriteLine($"\nObject {_house.parts[i]._name} is done!");
+            }
+            else
+            {
+                WriteLine($"\nObject {_house.parts[i]._name} isn't done yet.");
+            }
+        }
+    }
 }
 
 public class House
