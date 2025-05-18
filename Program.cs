@@ -39,8 +39,9 @@ TeamLeader (Бригадир).
 
 public interface IPart
 {
-    string _name { get; }
-    int _time { get; }
+    string _name { get; set; }
+    int _time { get; set; }
+    bool _isdone { get; set; }
 }
 
 public interface IWorker
@@ -52,26 +53,31 @@ public class Basement : IPart
 {
     public string _name { set; get; }
     public int _time { set; get; }
+    public bool _isdone { set; get; } = false;
 }
 public class Window : IPart
 {
     public string _name { set; get; }
     public int _time { set; get; }
+    public bool _isdone { set; get; } = false;
 }
 public class Wall : IPart
 {
     public string _name { set; get; }
     public int _time { set; get; }
+    public bool _isdone { set; get; } = false;
 }
 public class Roof : IPart
 {
     public string _name { set; get; }
     public int _time { set; get; }
+    public bool _isdone { set; get; } = false;
 }
 public class Door : IPart
 {
     public string _name { set; get; }
     public int _time { set; get; }
+    public bool _isdone { set; get; } = false;
 }
 
 public class Builder : IWorker
@@ -87,21 +93,53 @@ public class Team_Leader : IWorker
 
 public class Team
 {
-    public Builder[] builders =
+    public Builder[] _builders =
     {
         new Builder { _name = "Builder 1", _strength = 1 },
         new Builder { _name = "Builder 2", _strength = 2 },
         new Builder { _name = "Builder 3", _strength = 3 },
         new Builder { _name = "Builder 4", _strength = 4 }
     };
-    public Team_Leader leader { set; get; }
+    public Team_Leader _leader { set; get; }
+    public House _house {  set; get; }
+
+    public bool Build(int req_str)
+    {
+        for (int i = 0; i < _house.parts.Length; i++) 
+        {
+            if (_house.parts[i]._isdone == false)
+            {
+                while (_house.parts[i]._time > 0)
+                {
+                    WriteLine($"\nBuilder {_builders[req_str - 1]._name} is building the object {_house.parts[i]._name}..");
+
+                    _house.parts[i]._time -= _builders[req_str - 1]._strength;
+                }
+
+                _house.parts[i]._isdone = true;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 public class House
 {
-    public Basement _base { set; get; }
-    public Wall[] _walls { set; get; }
-    public Window[] _windows { set; get; }
-    public Door _door { set; get; }
-    public Roof _roof { set; get; }
+    public IPart[] parts =
+    {
+        new Basement{_name = "Basement", _time = 5},
+        new Wall{_name = "Wall 1", _time = 4},
+        new Wall{_name = "Wall 2", _time = 4},
+        new Wall{_name = "Wall 3", _time = 4},
+        new Wall{_name = "Wall 4", _time = 4},
+        new Door{_name = "Door", _time = 3},
+        new Window{_name = "Window 1", _time = 2},
+        new Window{_name = "Window 2", _time = 2},
+        new Window{_name = "Window 3", _time = 2},
+        new Window{_name = "Window 4", _time = 2},
+        new Roof{_name = "Roof", _time = 6}
+    };
 }
