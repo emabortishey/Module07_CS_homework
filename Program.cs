@@ -37,6 +37,28 @@ TeamLeader (Бригадир).
 
 */
 
+Team new_building = new Team
+{
+    _builders = new List<Builder>
+    {
+        new Builder { _name = "Builder 1", _strength = 1 },
+        new Builder { _name = "Builder 2", _strength = 2 },
+        new Builder { _name = "Builder 3", _strength = 3 },
+        new Builder { _name = "Builder 4", _strength = 4 }
+    },
+
+    _leader = new Team_Leader { _name = "Team Leader" },
+
+    _house = new House()
+};
+
+while(new_building.Build(1) != false)
+{
+    WriteLine("\n\nBuilder with strength 1 been sent to build the house.");
+}
+
+new_building.Report();
+
 public interface IPart
 {
     string _name { get; set; }
@@ -88,18 +110,11 @@ public class Builder : IWorker
 public class Team_Leader : IWorker
 {
     public string _name { set; get; }
-    public int _strength { set; get; }
 }
 
 public class Team
 {
-    public Builder[] _builders =
-    {
-        new Builder { _name = "Builder 1", _strength = 1 },
-        new Builder { _name = "Builder 2", _strength = 2 },
-        new Builder { _name = "Builder 3", _strength = 3 },
-        new Builder { _name = "Builder 4", _strength = 4 }
-    };
+    public List<Builder> _builders { set; get; }
     public Team_Leader _leader { set; get; }
     public House _house {  set; get; }
 
@@ -122,11 +137,14 @@ public class Team
             }
         }
 
+        WriteLine("\nKaloo kalay no work today!");
+
         return false;
     }
 
     public void Report()
     {
+        WriteLine($"\n\n{_leader._name}'s report says:\n");
         for (int i = 0; i < _house.parts.Length; i++)
         {
             if (_house.parts[i]._isdone == true)
